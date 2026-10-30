@@ -4,6 +4,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class WithdrawalHeartsCommand implements BasicCommand {
     @Override
@@ -19,7 +20,8 @@ public class WithdrawalHeartsCommand implements BasicCommand {
         }
         if (player.getMaxHealth() <= value * 2) player.sendMessage(MiniMessage.miniMessage().deserialize(Omaradditions.PREFIX + "<You don't have enough Hearts"));
         else {
-
+            player.setMaxHealth(player.getMaxHealth() - (value * 2));
+            player.give(ItemStack.of());
         }
 
 
