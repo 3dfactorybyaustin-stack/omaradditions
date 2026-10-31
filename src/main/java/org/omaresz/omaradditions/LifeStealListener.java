@@ -1,5 +1,7 @@
 package org.omaresz.omaradditions;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.time.Duration;
+import java.util.Date;
 
 import static org.omaresz.omaradditions.Omaradditions.HEART_KEY;
 
@@ -29,7 +32,7 @@ public class LifeStealListener implements Listener {
         }
         killer.setMaxHealth(killer.getMaxHealth() + 2);
         killer.sendMessage(MiniMessage.miniMessage().deserialize("<green>You have gained one Heart from <bold>" + victim.getName()));
-        if (victim.getMaxHealth() < 3) victim.ban("Max Health Too Low", Duration.ZERO, "omaradditions", true);
+        if (victim.getMaxHealth() < 3) victim.ban("Max Health Too Low", (Date) null, null, true);
         else {
             victim.setMaxHealth(victim.getMaxHealth() - 2);
             victim.sendMessage(MiniMessage.miniMessage().deserialize("<red>You have lost one Heart to <bold>" + killer.getName()));
@@ -43,6 +46,7 @@ public class LifeStealListener implements Listener {
             ItemStack items = event.getPlayer().getActiveItem();
             items.setAmount(items.getAmount()-1);
             event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth()+2);
+            event.getPlayer().playSound(Sound.sound(Key.key("block.beacon.activate"), Sound.Source.PLAYER, 1.0f, 1.0f));
         }
     }
 }

@@ -2,6 +2,8 @@ package org.omaresz.omaradditions;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,13 +18,18 @@ public class WithdrawalHeartsCommand implements BasicCommand {
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         int value;
         Player player = (Player) commandSourceStack.getExecutor();
-        if (args[0] == null) value = 2;
-        else try {
-            value = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize(Omaradditions.PREFIX + "<red> Please input an Integer"));
-            return;
+        try {
+            if (args[0] == null) value = 1;
+            else try {
+                value = Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                player.sendMessage(MiniMessage.miniMessage().deserialize(Omaradditions.PREFIX + "<red> Please input an Integer"));
+                return;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            value = 1;
         }
+
         if (player.getMaxHealth() <= value * 2) player.sendMessage(MiniMessage.miniMessage().deserialize(Omaradditions.PREFIX + "<red>You don't have enough Hearts"));
         else {
             player.setMaxHealth(player.getMaxHealth() - (value * 2));
@@ -32,6 +39,7 @@ public class WithdrawalHeartsCommand implements BasicCommand {
             meta.getPersistentDataContainer().set(HEART_KEY, PersistentDataType.BOOLEAN, Boolean.TRUE);
             items.setItemMeta(meta);
             player.give(items);
+            player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
         }
 
 
