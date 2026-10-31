@@ -1,12 +1,21 @@
 package org.omaresz.omaradditions;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.time.Duration;
+
+import static org.omaresz.omaradditions.Omaradditions.HEART_KEY;
 
 
 public class LifeStealListener implements Listener {
@@ -24,6 +33,16 @@ public class LifeStealListener implements Listener {
         else {
             victim.setMaxHealth(victim.getMaxHealth() - 2);
             victim.sendMessage(MiniMessage.miniMessage().deserialize("<red>You have lost one Heart to <bold>" + killer.getName()));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
+        if (event.getItem().getItemMeta().getPersistentDataContainer().has(HEART_KEY, PersistentDataType.BOOLEAN)) {
+            event.setCancelled(true);
+            ItemStack items = event.getPlayer().getActiveItem();
+            items.setAmount(items.getAmount()-1);
+            event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth()+2);
         }
     }
 }
