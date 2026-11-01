@@ -9,6 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -44,8 +48,8 @@ public class LifeStealListener implements Listener {
         if (event.getItem().getItemMeta().getPersistentDataContainer().has(HEART_KEY, PersistentDataType.BOOLEAN)) {
             event.setCancelled(true);
             ItemStack items = event.getPlayer().getActiveItem();
-            items.setAmount(items.getAmount()-1);
-            event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth()+2);
+            items.setAmount(items.getAmount() - 1);
+            event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth() + 2);
             event.getPlayer().playSound(Sound.sound(Key.key("block.beacon.activate"), Sound.Source.PLAYER, 1.0f, 1.0f));
         }
     }
