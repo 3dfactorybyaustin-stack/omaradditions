@@ -1,7 +1,7 @@
 name: omaradditions
 version: '${version}'
 
-main: org.omaresz.omaradditions.Omaradditions
+main: org.omaresz.omaradditions.OmarLifeSteal
 paper-plugin-loader: org.omaresz.omaradditions.OmaradditionsLoader
 api-version: '26.2'
 load: POSTWORLD

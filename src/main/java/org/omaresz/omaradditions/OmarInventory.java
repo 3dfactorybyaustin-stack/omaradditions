@@ -1,6 +1,8 @@
 package org.omaresz.omaradditions;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
@@ -9,18 +11,24 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.function.Consumer;
+
 
 
 public class OmarInventory implements InventoryHolder, Listener {
-    private final Inventory inventory;
+    private Inventory inventory;
 
-    public OmarInventory() {
-        inventory = Bukkit.createInventory(this, 27);
+    public OmarInventory(String title) {
+        inventory = Bukkit.createInventory(this, 27, MiniMessage.miniMessage().deserialize(title));
     }
 
-    public OmarInventory(int num) {
-        inventory = Bukkit.createInventory(this, num * 9);
+    public OmarInventory(int num, String title) {
+        inventory = Bukkit.createInventory(this, num * 9, MiniMessage.miniMessage().deserialize(title));
     }
 
     public void setSlot(int slot, ItemStack item) {
@@ -34,12 +42,23 @@ public class OmarInventory implements InventoryHolder, Listener {
     }
 
     public void border(ItemStack itemStack) {
-        this.setSlots(0, 8, Omaradditions.BORDER_ITEM);
-        this.setSlots(inventory.getSize()-9, inventory.getSize()-1, Omaradditions.BORDER_ITEM);
+        this.setSlots(0, 8, OmarLifeSteal.BORDER_ITEM);
+        this.setSlots(inventory.getSize()-9, inventory.getSize()-1, OmarLifeSteal.BORDER_ITEM);
         for (int i = 1; i <= (inventory.getSize() / 9) - 2; i++) {
-            this.setSlot(i*9, Omaradditions.BORDER_ITEM);
-            this.setSlot(i * 9 + 8, Omaradditions.BORDER_ITEM);
+            this.setSlot(i*9, OmarLifeSteal.BORDER_ITEM);
+            this.setSlot(i * 9 + 8, OmarLifeSteal.BORDER_ITEM);
         }
+    }
+
+
+
+    //helper method for creating inventory items
+    public static ItemStack createItem(Material item, Consumer<ItemMeta> meta) {
+        ItemStack temp = new ItemStack(item);
+        if (meta != null) temp.editMeta(meta);
+
+        return temp;
+
     }
 
     @Override
