@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 
 public class OmarInventory implements InventoryHolder, Listener {
     private Inventory inventory;
+    private int pageIndex = 0;
 
     public OmarInventory(String title) {
         inventory = Bukkit.createInventory(this, 27, MiniMessage.miniMessage().deserialize(title));
@@ -31,15 +32,26 @@ public class OmarInventory implements InventoryHolder, Listener {
         inventory = Bukkit.createInventory(this, num * 9, MiniMessage.miniMessage().deserialize(title));
     }
 
+    public OmarInventory(int num, String title, int page) {
+        inventory = Bukkit.createInventory(this, num * 9, MiniMessage.miniMessage().deserialize(title));
+        pageIndex = page;
+    }
+
+
+    // set methods
     public void setSlot(int slot, ItemStack item) {
         inventory.setItem(slot, item);
     }
+
+
+
 
     public void setSlots(int first, int second, ItemStack item) {
         for (int i = first; i <= second; i++) {
             this.setSlot(i, item);
         }
     }
+
 
     public void border(ItemStack itemStack) {
         this.setSlots(0, 8, OmarLifeSteal.BORDER_ITEM);
@@ -50,6 +62,10 @@ public class OmarInventory implements InventoryHolder, Listener {
         }
     }
 
+    //get methods
+    public int getPageIndex() {
+        return pageIndex;
+    }
 
 
     //helper method for creating inventory items
@@ -60,6 +76,14 @@ public class OmarInventory implements InventoryHolder, Listener {
         return temp;
 
     }
+    //helper method for checking inventory arrays
+    public static boolean checkInventoryArray(OmarInventory[] arrays, Inventory inventory) {
+        for (OmarInventory inv : arrays) {
+            if (inventory.equals(inv.getInventory())) return true;
+        }
+        return false;
+    }
+
 
     @Override
     public @NotNull Inventory getInventory() {

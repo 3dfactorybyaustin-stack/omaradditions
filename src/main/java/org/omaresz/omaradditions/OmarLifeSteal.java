@@ -61,7 +61,7 @@ public final class OmarLifeSteal extends JavaPlugin {
         //playerlist inventory
 
         for (int i = 0; i < 11; i++){
-            PLAYER_LIST_INVS[i] = new OmarInventory(5, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")");
+            PLAYER_LIST_INVS[i] = new OmarInventory(5, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")", i);
             PLAYER_LIST_INVS[i].border(BORDER_ITEM);
         }
 
