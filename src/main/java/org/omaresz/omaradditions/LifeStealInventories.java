@@ -59,7 +59,7 @@ public class LifeStealInventories implements BasicCommand, Listener {
     public static void updateGUILoop(Plugin plugin) {
 
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            int total = 30;//Bukkit.getOnlinePlayers().size();
+            int total = Bukkit.getOnlinePlayers().size();
             int inventoryNum = (int) Math.ceil(((double) total / 21));
             int rowNum;
             int trim;
@@ -79,22 +79,39 @@ public class LifeStealInventories implements BasicCommand, Listener {
             }
 
             //loops for each inventory
+            //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("--------"));
+
             for (int i = 0; i <= inventoryNum-1; i++) {
                 if (total - index >= 21) {
                     trim = 0;
                     rowNum = 3;
 
                 } else{
-                    rowNum = ((int) total / 7);
-                    trim = ((int) total % 7);
+                    rowNum = ((int) (total - index) / 7);
+                    trim = ((int) (total - index) % 7);
 
                 }
+                //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("trim" + trim));
+                //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("rowNum" + rowNum));
                 //adds all full rows
+                Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index: " + index));
                 for (int row = 1; row <= rowNum; row++) {
-                    OmarLifeSteal.PLAYER_LIST_INVS[i].setSlots((row * 9) + 1, (row * 9) + 7, new ItemStack(Material.REDSTONE));
+                    for (int x = 0; x < 7; x++) {
+                        Player p = players[index];
+                        OmarLifeSteal.PLAYER_LIST_INVS[i].setSlot((row * 9) + 1 + x, OmarInventory.createItem(Material.PAPER, itemMeta -> itemMeta.displayName(MiniMessage.miniMessage().deserialize("<red><!italic>" + p.getName() + "<grey>(" + p.getMaxHealth()/2 + "❤)"))));
+                        index ++;
+                        Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
+
+                    }
                 }
                 //adds final row as trim
-                OmarLifeSteal.PLAYER_LIST_INVS[i].setSlots(((rowNum + 1) * 9) + 1, ((rowNum + 1) * 9) + trim, new ItemStack(Material.REDSTONE));
+                for (int x = 0; x < trim; x++) {
+                    Player p = players[index];
+                    OmarLifeSteal.PLAYER_LIST_INVS[i].setSlot(((rowNum + 1) * 9) + 1 + x, OmarInventory.createItem(Material.PAPER, itemMeta -> itemMeta.displayName(MiniMessage.miniMessage().deserialize("<red><!italic>" + p.getName() + "<grey>(" + p.getMaxHealth()/2 + "❤)"))));
+                    Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
+                    index ++;
+                }
+
             }
 
         }, 0L, 20L);
