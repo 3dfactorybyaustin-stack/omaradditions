@@ -1,13 +1,22 @@
 package org.omaresz.omaradditions;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+
 
 public final class OmarLifeSteal extends JavaPlugin {
+    //files
+    public static BannedPlayerList BANNED_PLAYERLIST;
     //variables
     public static final String PREFIX = "<dark_grey><bold>[<#a554f4>O<#9e55ef>M<#9856ea>A<#9157e5>R<#8a57df>A<#8358da>D<#7d59d5>D<#765ad0>I<#6f5bcb>T<#685cc6>I<#625cc0>O<#5b5dbb>N<#545eb6>S<dark_grey><bold>]<white> - <grey>";
     public static final NamespacedKey HEART_KEY = new NamespacedKey("omaradditions", "heart");
@@ -46,6 +55,10 @@ public final class OmarLifeSteal extends JavaPlugin {
 
     @Override
     public void onEnable() {
+    BANNED_PLAYERLIST = new BannedPlayerList(this);
+
+
+        //files
 
         //main inventory
 
@@ -60,10 +73,6 @@ public final class OmarLifeSteal extends JavaPlugin {
 
         //playerlist inventory
 
-        for (int i = 0; i < 11; i++){
-            PLAYER_LIST_INVS[i] = new OmarInventory(5, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")", i);
-            PLAYER_LIST_INVS[i].border(BORDER_ITEM);
-        }
 
 
 
@@ -75,10 +84,18 @@ public final class OmarLifeSteal extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new OmarInventory("none"), this);
 
         LifeStealInventories.updateGUILoop(this);
+
+
+
+        for (int i = 0; i < 11; i++){
+            PLAYER_LIST_INVS[i] = new OmarInventory(5, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")", i);
+            PLAYER_LIST_INVS[i].border(BORDER_ITEM);
+        }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        BANNED_PLAYERLIST.save();
     }
 }

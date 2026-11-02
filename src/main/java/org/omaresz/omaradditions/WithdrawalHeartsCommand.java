@@ -5,6 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +41,8 @@ public class WithdrawalHeartsCommand implements BasicCommand {
             items.setItemMeta(meta);
             player.give(items);
             player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
+            OmarLifeSteal.BANNED_PLAYERLIST.addString("test");
+            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("" + OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()));
         }
 
 

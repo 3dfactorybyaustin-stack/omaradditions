@@ -30,6 +30,7 @@ public class LifeStealInventories implements BasicCommand, Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
+        Bukkit.broadcast(MiniMessage.miniMessage().deserialize("" ));
         int slot = event.getSlot();
         Bukkit.broadcast(MiniMessage.miniMessage().deserialize(" " + slot));
         if (event.getInventory().equals(OmarLifeSteal.MAIN_INV.getInventory())) {

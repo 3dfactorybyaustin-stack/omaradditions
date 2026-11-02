@@ -27,7 +27,10 @@ public class LifeStealListener implements Listener {
         }
         killer.setMaxHealth(killer.getMaxHealth() + 2);
         killer.sendMessage(MiniMessage.miniMessage().deserialize("<green>You have gained one Heart from <bold>" + victim.getName()));
-        if (victim.getMaxHealth() < 3) victim.ban("Max Health Too Low", (Date) null, null, true);
+        if (victim.getMaxHealth() < 3) {
+            victim.ban("Max Health Too Low", (Date) null, null, true);
+            OmarLifeSteal.BANNED_PLAYERLIST.addPlayer(victim);
+        }
         else {
             victim.setMaxHealth(victim.getMaxHealth() - 2);
             victim.sendMessage(MiniMessage.miniMessage().deserialize("<red>You have lost one Heart to <bold>" + killer.getName()));
