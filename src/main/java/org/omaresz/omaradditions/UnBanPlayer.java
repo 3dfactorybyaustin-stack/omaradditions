@@ -11,6 +11,8 @@ public class UnBanPlayer implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         Player p = (Player) commandSourceStack.getExecutor();
-        if (p.getInventory().contains())
+        if (p.getInventory().contains(OmarLifeSteal.UNBAN_ITEM)) {
+            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("test"));
+        }
     }
 }

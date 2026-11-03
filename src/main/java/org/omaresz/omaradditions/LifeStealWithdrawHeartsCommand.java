@@ -14,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import static org.omaresz.omaradditions.OmarLifeSteal.HEART_KEY;
 
-public class LifeStealComands implements BasicCommand {
+public class LifeStealWithdrawHeartsCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         int value;
@@ -34,12 +34,7 @@ public class LifeStealComands implements BasicCommand {
         if (player.getMaxHealth() <= value * 2) player.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red>You don't have enough Hearts"));
         else {
             player.setMaxHealth(player.getMaxHealth() - (value * 2));
-            ItemStack items = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, value);
-            ItemMeta meta = items.getItemMeta();
-            meta.displayName(MiniMessage.miniMessage().deserialize("<!italic><red><bold>HEART"));
-            meta.getPersistentDataContainer().set(HEART_KEY, PersistentDataType.BOOLEAN, Boolean.TRUE);
-            items.setItemMeta(meta);
-            player.give(items);
+            player.give(OmarLifeSteal.HEAR_ITEM);
             player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
             OmarLifeSteal.BANNED_PLAYERLIST.addPlayer(player);
             Bukkit.broadcast(MiniMessage.miniMessage().deserialize("test: " + OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().toString()));

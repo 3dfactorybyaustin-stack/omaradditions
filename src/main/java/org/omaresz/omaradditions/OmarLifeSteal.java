@@ -4,6 +4,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -14,8 +15,13 @@ public final class OmarLifeSteal extends JavaPlugin {
     public static final String PREFIX = "<dark_grey><bold>[<#a554f4>O<#9e55ef>M<#9856ea>A<#9157e5>R<#8a57df>A<#8358da>D<#7d59d5>D<#765ad0>I<#6f5bcb>T<#685cc6>I<#625cc0>O<#5b5dbb>N<#545eb6>S<dark_grey><bold>]<white> - <grey>";
     public static final NamespacedKey HEART_KEY = new NamespacedKey("omaradditions", "heart");
     public static final NamespacedKey CANCEL_ClICK = new NamespacedKey("omaradditrions", "inventory");
-
-
+    public static final ItemStack HEAR_ITEM = OmarInventory.createItem(Material.ENCHANTED_GOLDEN_APPLE, itemMeta -> {
+        itemMeta.displayName(MiniMessage.miniMessage().deserialize("<!italic><red><bold>HEART"));
+        itemMeta.getPersistentDataContainer().set(HEART_KEY, PersistentDataType.BOOLEAN, Boolean.TRUE);
+    });
+    public static final ItemStack UNBAN_ITEM = OmarInventory.createItem(Material.DIAMOND, itemMeta -> {
+        itemMeta.displayName(MiniMessage.miniMessage().deserialize("<!italic><red><bold>HEART"));
+    });
     //inventories
     public static final OmarInventory MAIN_INV = new OmarInventory("<#7E9398>O<#7B8F9B>M<#778A9D>A<#7486A0>R<#7081A2>L<#6D7DA5>I<#6979A7>F<#6674AA>E<#6270AC>S<#5F6BAF>T<#5B67B1>E<#5862B4>A<#545EB6>L");
     public static final OmarInventory BANNED_PLAYERS_INV = new OmarInventory(5, "<#7E9398>B<#7B8F9A>A<#788B9D>N<#74879F>N<#7183A1>E<#6E7FA4>D <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S");
@@ -26,6 +32,7 @@ public final class OmarLifeSteal extends JavaPlugin {
     public static final ItemStack BORDER_ITEM = OmarInventory.createItem(Material.BLACK_STAINED_GLASS_PANE, itemMeta -> {
         itemMeta.displayName(MiniMessage.miniMessage().deserialize(""));
     });
+
 
 
     public static final ItemStack BANNED_PLAYER_LIST_ITEM = OmarInventory.createItem(Material.PLAYER_HEAD, itemMeta -> {
@@ -71,7 +78,7 @@ public final class OmarLifeSteal extends JavaPlugin {
 
 
         this.registerCommand("LifeStealGui", new LifeStealInventories());
-        this.registerCommand("WithdrawalHeart", new LifeStealComands());
+        this.registerCommand("WithdrawalHeart", new LifeStealWithdrawHeartsCommand());
         this.registerCommand("Test", new UnBanPlayer());
         this.getServer().getPluginManager().registerEvents(new LifeStealListener(), this);
         this.getServer().getPluginManager().registerEvents(new LifeStealInventories(), this);
