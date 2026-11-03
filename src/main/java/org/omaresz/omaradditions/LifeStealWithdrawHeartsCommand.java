@@ -34,10 +34,8 @@ public class LifeStealWithdrawHeartsCommand implements BasicCommand {
         if (player.getMaxHealth() <= value * 2) player.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red>You don't have enough Hearts"));
         else {
             player.setMaxHealth(player.getMaxHealth() - (value * 2));
-            player.give(OmarLifeSteal.HEAR_ITEM);
+            for (int i = 0; i < value; i++) player.give(OmarLifeSteal.HEAR_ITEM);
             player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
-            OmarLifeSteal.BANNED_PLAYERLIST.addPlayer(player);
-            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("test: " + OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().toString()));
         }
 
 

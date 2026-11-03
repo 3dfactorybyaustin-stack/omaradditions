@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Date;
 
 import static org.omaresz.omaradditions.OmarLifeSteal.HEART_KEY;
+import static org.omaresz.omaradditions.OmarLifeSteal.UNBAN_ITEM;
 
 
 public class LifeStealListener implements Listener {

@@ -1,6 +1,7 @@
 package org.omaresz.omaradditions;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -43,7 +44,7 @@ public class BannedPlayerList {
         return temp;
     }
 
-    public void addPlayer(Player p) {
+    public void addPlayer(OfflinePlayer p) {
         List<String> temp = new ArrayList<>();
         for (String id : yml.getStringList("playerList")) {
             temp.add(id);
@@ -52,7 +53,7 @@ public class BannedPlayerList {
         yml.set("playerList", temp);
     }
 
-    public void removePlayer(Player p) {
+    public void removePlayer(OfflinePlayer p) {
         List<String> temp = new ArrayList<>();
         for (String id : yml.getStringList("playerList")) {
             temp.add(id);

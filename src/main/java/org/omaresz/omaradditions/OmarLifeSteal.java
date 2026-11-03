@@ -20,7 +20,8 @@ public final class OmarLifeSteal extends JavaPlugin {
         itemMeta.getPersistentDataContainer().set(HEART_KEY, PersistentDataType.BOOLEAN, Boolean.TRUE);
     });
     public static final ItemStack UNBAN_ITEM = OmarInventory.createItem(Material.DIAMOND, itemMeta -> {
-        itemMeta.displayName(MiniMessage.miniMessage().deserialize("<!italic><red><bold>HEART"));
+        itemMeta.displayName(MiniMessage.miniMessage().deserialize("<!italic><blue><bold>RESPAWN TOKEN"));
+        itemMeta.setMaxStackSize(1);
     });
     //inventories
     public static final OmarInventory MAIN_INV = new OmarInventory("<#7E9398>O<#7B8F9B>M<#778A9D>A<#7486A0>R<#7081A2>L<#6D7DA5>I<#6979A7>F<#6674AA>E<#6270AC>S<#5F6BAF>T<#5B67B1>E<#5862B4>A<#545EB6>L");
