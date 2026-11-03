@@ -35,23 +35,31 @@ public class BannedPlayerList {
 
 
     }
-    public List<UUID> getPlayerList() {
-        List<UUID> temp = new ArrayList<>();
+    public List<String> getPlayerList() {
+        List<String> temp = new ArrayList<>();
         for (String s : yml.getStringList("playerList")) {
-            temp.add(UUID.fromString(s));
+            temp.add(s);
         }
         return temp;
     }
 
     public void addPlayer(Player p) {
-        yml.set("playerList", yml.getStringList("playerList").add(p.getUniqueId().toString()));
+        List<String> temp = new ArrayList<>();
+        for (String id : yml.getStringList("playerList")) {
+            temp.add(id);
+        }
+        temp.add(p.getUniqueId().toString());
+        yml.set("playerList", temp);
     }
 
-    public void addString(String s) {
-        yml.getStringList("playerList").add(s);
-
+    public void removePlayer(Player p) {
+        List<String> temp = new ArrayList<>();
+        for (String id : yml.getStringList("playerList")) {
+            temp.add(id);
+        }
+        temp.remove(p.getUniqueId().toString());
+        yml.set("playerList", temp);
     }
-
     public void save() {
         try {
             yml.save(file);

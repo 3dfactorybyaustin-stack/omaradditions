@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -28,7 +29,7 @@ public class LifeStealListener implements Listener {
         killer.setMaxHealth(killer.getMaxHealth() + 2);
         killer.sendMessage(MiniMessage.miniMessage().deserialize("<green>You have gained one Heart from <bold>" + victim.getName()));
         if (victim.getMaxHealth() < 3) {
-            victim.ban("Max Health Too Low", (Date) null, null, true);
+            victim.kick(MiniMessage.miniMessage().deserialize("Max Health Too Low"));
             OmarLifeSteal.BANNED_PLAYERLIST.addPlayer(victim);
         }
         else {
@@ -46,5 +47,10 @@ public class LifeStealListener implements Listener {
             event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth() + 2);
             event.getPlayer().playSound(Sound.sound(Key.key("block.beacon.activate"), Sound.Source.PLAYER, 1.0f, 1.0f));
         }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        if (OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().contains(event.getPlayer().getUniqueId().toString())) event.getPlayer().kick(MiniMessage.miniMessage().deserialize("Max Health Too Low"));
     }
 }

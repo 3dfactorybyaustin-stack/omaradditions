@@ -14,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import static org.omaresz.omaradditions.OmarLifeSteal.HEART_KEY;
 
-public class WithdrawalHeartsCommand implements BasicCommand {
+public class LifeStealComands implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         int value;
@@ -41,10 +41,11 @@ public class WithdrawalHeartsCommand implements BasicCommand {
             items.setItemMeta(meta);
             player.give(items);
             player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
-            OmarLifeSteal.BANNED_PLAYERLIST.addString("test");
-            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("" + OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()));
+            OmarLifeSteal.BANNED_PLAYERLIST.addPlayer(player);
+            Bukkit.broadcast(MiniMessage.miniMessage().deserialize("test: " + OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().toString()));
         }
 
 
     }
 }
+

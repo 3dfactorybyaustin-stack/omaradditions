@@ -95,13 +95,13 @@ public class LifeStealInventories implements BasicCommand, Listener {
                 //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("trim" + trim));
                 //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("rowNum" + rowNum));
                 //adds all full rows
-                Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index: " + index));
+                //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index: " + index));
                 for (int row = 1; row <= rowNum; row++) {
                     for (int x = 0; x < 7; x++) {
                         Player p = players[index];
                         OmarLifeSteal.PLAYER_LIST_INVS[i].setSlot((row * 9) + 1 + x, OmarInventory.createItem(Material.PAPER, itemMeta -> itemMeta.displayName(MiniMessage.miniMessage().deserialize("<red><!italic>" + p.getName() + "<grey>(" + p.getMaxHealth()/2 + "❤)"))));
                         index ++;
-                        Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
+                        //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
 
                     }
                 }
@@ -109,7 +109,7 @@ public class LifeStealInventories implements BasicCommand, Listener {
                 for (int x = 0; x < trim; x++) {
                     Player p = players[index];
                     OmarLifeSteal.PLAYER_LIST_INVS[i].setSlot(((rowNum + 1) * 9) + 1 + x, OmarInventory.createItem(Material.PAPER, itemMeta -> itemMeta.displayName(MiniMessage.miniMessage().deserialize("<red><!italic>" + p.getName() + "<grey>(" + p.getMaxHealth()/2 + "❤)"))));
-                    Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
+                    //Bukkit.broadcast(MiniMessage.miniMessage().deserialize("index++"));
                     index ++;
                 }
 

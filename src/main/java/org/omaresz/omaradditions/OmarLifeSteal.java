@@ -1,17 +1,10 @@
 package org.omaresz.omaradditions;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 
 
 public final class OmarLifeSteal extends JavaPlugin {
@@ -78,7 +71,8 @@ public final class OmarLifeSteal extends JavaPlugin {
 
 
         this.registerCommand("LifeStealGui", new LifeStealInventories());
-        this.registerCommand("WithdrawalHeart", new WithdrawalHeartsCommand());
+        this.registerCommand("WithdrawalHeart", new LifeStealComands());
+        this.registerCommand("Test", new UnBanPlayer());
         this.getServer().getPluginManager().registerEvents(new LifeStealListener(), this);
         this.getServer().getPluginManager().registerEvents(new LifeStealInventories(), this);
         this.getServer().getPluginManager().registerEvents(new OmarInventory("none"), this);
