@@ -75,12 +75,10 @@ public final class OmarLifeSteal extends JavaPlugin {
         //playerlist inventory
 
 
-
-
-
+        this.registerCommand("Debug", new DebugCommand());
         this.registerCommand("LifeStealGui", new LifeStealInventories());
         this.registerCommand("WithdrawalHeart", new LifeStealWithdrawHeartsCommand());
-        this.registerCommand("Test", new UnBanPlayer());
+        this.registerCommand("UnbanPlayer", new UnBanPlayer());
         this.getServer().getPluginManager().registerEvents(new LifeStealListener(), this);
         this.getServer().getPluginManager().registerEvents(new LifeStealInventories(), this);
         this.getServer().getPluginManager().registerEvents(new OmarInventory("none"), this);

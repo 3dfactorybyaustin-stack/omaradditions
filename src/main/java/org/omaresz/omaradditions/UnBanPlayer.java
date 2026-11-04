@@ -6,6 +6,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -20,10 +21,19 @@ public class UnBanPlayer implements BasicCommand {
             for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
                 if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(args[0]).getUniqueId())) {
                     OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(args[0]));
-                    p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue>" + Bukkit.getOfflinePlayer(args[0]).getName() + "Has been Unbanned"));
-                    p.getInventory().remove(OmarLifeSteal.UNBAN_ITEM);
+                    p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(args[0]).getName() + " Has been Unbanned"));
+                    for (ItemStack item : p.getInventory()) {
+                        if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
+                            item.setAmount(0);
+                            return;
+                        }
+                    }
                 };
             }
-        }
+            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> Player has not been Banned"));
+        } else
+            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> You do not have a Respawn Token"));
+
+
     }
 }
