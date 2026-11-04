@@ -25,9 +25,9 @@ public final class OmarLifeSteal extends JavaPlugin {
     });
     //inventories
     public static final OmarInventory MAIN_INV = new OmarInventory("<#7E9398>O<#7B8F9B>M<#778A9D>A<#7486A0>R<#7081A2>L<#6D7DA5>I<#6979A7>F<#6674AA>E<#6270AC>S<#5F6BAF>T<#5B67B1>E<#5862B4>A<#545EB6>L");
-    public static final OmarInventory BANNED_PLAYERS_INV = new OmarInventory(5, "<#7E9398>B<#7B8F9A>A<#788B9D>N<#74879F>N<#7183A1>E<#6E7FA4>D <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S");
-
+    public static final OmarInventory BANNED_PLAYERS_INVS[] = new OmarInventory[11];
     public static OmarInventory PLAYER_LIST_INVS[] = new OmarInventory[11];
+
 
     //inventory variables
     public static final ItemStack BORDER_ITEM = OmarInventory.createItem(Material.BLACK_STAINED_GLASS_PANE, itemMeta -> {
@@ -68,8 +68,6 @@ public final class OmarLifeSteal extends JavaPlugin {
         MAIN_INV.setSlot(BANNED_PLAYER_LIST_SLOT, BANNED_PLAYER_LIST_ITEM);
         MAIN_INV.setSlot(PLAYER_LIST_SLOT, PLAYER_LIST_ITEM);
 
-        //banned players inventory
-        BANNED_PLAYERS_INV.border(BORDER_ITEM);
 
 
         //playerlist inventory
@@ -84,9 +82,13 @@ public final class OmarLifeSteal extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new OmarInventory("none"), this);
 
         LifeStealInventories.updateGUILoop(this);
+        //banned players inventory
+        for (int i = 0; i < 11; i++){
+            BANNED_PLAYERS_INVS[i] = new OmarInventory(4, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")", i);
+            BANNED_PLAYERS_INVS[i].border(BORDER_ITEM);
+        }
 
-
-
+        //active playerlist inventpry
         for (int i = 0; i < 11; i++){
             PLAYER_LIST_INVS[i] = new OmarInventory(5, "<#7E9398>O<#7B8F9A>N<#788B9D>L<#74879F>I<#7183A1>N<#6E7FA4>E <#6776A8>P<#6472AA>L<#616EAD>A<#5E6AAF>Y<#5A66B1>E<#5762B4>R<#545EB6>S<grey> (" + (i + 1) + ")", i);
             PLAYER_LIST_INVS[i].border(BORDER_ITEM);

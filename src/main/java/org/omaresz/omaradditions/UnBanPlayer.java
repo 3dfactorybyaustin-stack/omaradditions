@@ -23,6 +23,7 @@ public class UnBanPlayer implements BasicCommand {
                     OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(args[0]));
                     p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(args[0]).getName() + " Has been Unbanned"));
                     for (ItemStack item : p.getInventory()) {
+                        if (item == null) continue;
                         if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
                             item.setAmount(0);
                             return;
