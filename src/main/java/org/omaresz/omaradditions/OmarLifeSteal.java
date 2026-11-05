@@ -9,6 +9,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 
 public final class OmarLifeSteal extends JavaPlugin {
     //files
@@ -89,9 +91,9 @@ public final class OmarLifeSteal extends JavaPlugin {
 
 
         this.registerCommand("Debug", new DebugCommand());
-        this.registerCommand("LifeStealGui", new LifeStealInventories());
-        this.registerCommand("WithdrawalHeart", new LifeStealWithdrawHeartsCommand());
-        this.registerCommand("UnbanPlayer", new UnBanPlayer());
+        this.registerCommand("LifeStealGui", List.of("lifestealgui", "lsg"),  new LifeStealInventories());
+        this.registerCommand("WithdrawalHeart", List.of("withdrawalheart"), new LifeStealWithdrawHeartsCommand());
+        this.registerCommand("UnbanPlayer", List.of("unbanplayer", "revive"), new UnBanPlayer());
         this.getServer().getPluginManager().registerEvents(new LifeStealListener(), this);
         this.getServer().getPluginManager().registerEvents(new LifeStealInventories(), this);
         this.getServer().getPluginManager().registerEvents(new OmarInventory("none"), this);

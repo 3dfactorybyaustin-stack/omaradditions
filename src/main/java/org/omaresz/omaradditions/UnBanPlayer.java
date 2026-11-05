@@ -8,6 +8,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.fromString;
@@ -20,26 +23,36 @@ public class UnBanPlayer implements BasicCommand {
         unbanPlayerCommand(p, args[0]);
     }
 
-public static void unbanPlayerCommand(Player p, String target) {
-    if (p.getInventory().contains(OmarLifeSteal.UNBAN_ITEM)) {
-        for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
-            if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(target).getUniqueId())) {
-                OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(target));
-                Bukkit.getOfflinePlayer(UUID.fromString(s)).getPlayer().setMaxHealth(6);
-                p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(target).getName() + " Has been Unbanned"));
-                for (ItemStack item : p.getInventory()) {
-                    if (item == null) continue;
-                    if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
-                        item.setAmount(0);
-                        return;
+    public static void unbanPlayerCommand(Player p, String target) {
+        if (p.getInventory().contains(OmarLifeSteal.UNBAN_ITEM)) {
+            for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
+                if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(target).getUniqueId())) {
+                    OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(target));
+                    p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(target).getName() + " Has been Unbanned"));
+                    for (ItemStack item : p.getInventory()) {
+                        if (item == null) continue;
+                        if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
+                            item.setAmount(0);
+                            return;
+                        }
                     }
                 }
-            };
+                ;
+            }
+            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> Player has not been Banned"));
+        } else
+            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> You do not have a Respawn Token"));
+    }
+
+    @Override
+    public Collection<String> suggest(CommandSourceStack stack, String[] args) {
+        List<String> temp = new ArrayList<>();
+        OfflinePlayer p;
+        for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
+            p = (OfflinePlayer) Bukkit.getOfflinePlayer(UUID.fromString(s));
+            temp.add(p.getName());
+            LifeStealInventories.broadcast(p.getName());
         }
-        p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> Player has not been Banned"));
-    } else
-        p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> You do not have a Respawn Token"));
-
-
-}}
-
+        return temp;
+    }
+}
