@@ -73,7 +73,9 @@ public class LifeStealInventories implements BasicCommand, Listener {
             } else if (getTrueIndex(slot, temp.getPageIndex()) >= 0 && slot < 26) {
                 try {
                     String uuid = OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().get(getTrueIndex(slot, temp.getPageIndex()));
-                    Player p = (Player) Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                    OfflinePlayer p = (OfflinePlayer) Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                    Player player = (Player) event.getWhoClicked();
+                    UnBanPlayer.unbanPlayerCommand(player, p.getName());
 
                 }catch (IndexOutOfBoundsException e){
                     return;
