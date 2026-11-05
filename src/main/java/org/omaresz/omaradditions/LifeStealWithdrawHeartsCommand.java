@@ -5,14 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-
-import static org.omaresz.omaradditions.OmarLifeSteal.HEART_KEY;
 
 public class LifeStealWithdrawHeartsCommand implements BasicCommand {
     @Override
@@ -34,7 +27,7 @@ public class LifeStealWithdrawHeartsCommand implements BasicCommand {
         if (player.getMaxHealth() <= value * 2) player.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red>You don't have enough Hearts"));
         else {
             player.setMaxHealth(player.getMaxHealth() - (value * 2));
-            for (int i = 0; i < value; i++) player.give(OmarLifeSteal.HEAR_ITEM);
+            for (int i = 0; i < value; i++) player.give(OmarLifeSteal.HEART_ITEM);
             player.playSound(Sound.sound(Key.key("block.beacon.deactivate"), Sound.Source.PLAYER, 1.0f, 1.0f));
         }
 

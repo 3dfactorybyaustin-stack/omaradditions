@@ -25,6 +25,7 @@ public static void unbanPlayerCommand(Player p, String target) {
         for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
             if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(target).getUniqueId())) {
                 OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(target));
+                Bukkit.getOfflinePlayer(UUID.fromString(s)).getPlayer().setMaxHealth(6);
                 p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(target).getName() + " Has been Unbanned"));
                 for (ItemStack item : p.getInventory()) {
                     if (item == null) continue;
