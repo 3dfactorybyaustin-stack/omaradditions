@@ -69,6 +69,16 @@ public class LifeStealInventories implements BasicCommand, Listener {
             } else if (slot == NEXT_BUTTON_LOC_BANNED) {
                 if (temp.getPageIndex() == bannedListLength) return;
                 event.getWhoClicked().openInventory(OmarLifeSteal.BANNED_PLAYERS_INVS[temp.getPageIndex() + 1].getInventory());
+
+            } else if (getTrueIndex(slot, temp.getPageIndex()) >= 0 && slot < 26) {
+                try {
+                    String uuid = OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList().get(getTrueIndex(slot, temp.getPageIndex()));
+                    Player p = (Player) Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+
+                }catch (IndexOutOfBoundsException e){
+                    return;
+                }
+
             }
         }
     }
@@ -184,7 +194,9 @@ public class LifeStealInventories implements BasicCommand, Listener {
         }, 0L, 20L);
     }
 
-
+    public static int getTrueIndex(int index, int invNum) {
+        return (int)(invNum * 7 ) + index - 19;
+    }
 
     public static void broadcast(String s) {
         Bukkit.broadcast(MiniMessage.miniMessage().deserialize(" broadcast: " + s));

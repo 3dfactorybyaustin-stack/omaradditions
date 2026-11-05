@@ -17,24 +17,28 @@ public class UnBanPlayer implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
         Player p = (Player) commandSourceStack.getExecutor();
-        if (p.getInventory().contains(OmarLifeSteal.UNBAN_ITEM)) {
-            for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
-                if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(args[0]).getUniqueId())) {
-                    OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(args[0]));
-                    p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(args[0]).getName() + " Has been Unbanned"));
-                    for (ItemStack item : p.getInventory()) {
-                        if (item == null) continue;
-                        if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
-                            item.setAmount(0);
-                            return;
-                        }
-                    }
-                };
-            }
-            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> Player has not been Banned"));
-        } else
-            p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> You do not have a Respawn Token"));
-
-
+        unbanPlayerCommand(p, args[0]);
     }
-}
+
+public static void unbanPlayerCommand(Player p, String target) {
+    if (p.getInventory().contains(OmarLifeSteal.UNBAN_ITEM)) {
+        for (String s : OmarLifeSteal.BANNED_PLAYERLIST.getPlayerList()) {
+            if (UUID.fromString(s).equals(Bukkit.getOfflinePlayer(target).getUniqueId())) {
+                OmarLifeSteal.BANNED_PLAYERLIST.removePlayer(Bukkit.getOfflinePlayer(target));
+                p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<blue> " + Bukkit.getOfflinePlayer(target).getName() + " Has been Unbanned"));
+                for (ItemStack item : p.getInventory()) {
+                    if (item == null) continue;
+                    if (item.equals(OmarLifeSteal.UNBAN_ITEM)) {
+                        item.setAmount(0);
+                        return;
+                    }
+                }
+            };
+        }
+        p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> Player has not been Banned"));
+    } else
+        p.sendMessage(MiniMessage.miniMessage().deserialize(OmarLifeSteal.PREFIX + "<red> You do not have a Respawn Token"));
+
+
+}}
+
